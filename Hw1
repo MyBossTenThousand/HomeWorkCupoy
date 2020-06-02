@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jun  2 15:05:12 2020
+
+@author: user
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def mean_Square_Error(y,yp):
+    
+    print("Run~")
+    mse = sum(pow((y-yp),2))/len(y)
+    return mse
+    
+    
+
+w = 3
+b = 0.5
+x_lin = np.linspace(0, 100, 101)
+y = (x_lin + np.random.randn(101) * 5) * w + b
+
+plt.plot(x_lin, y, 'b.', label = 'data points')
+plt.title("Assume we have data points")
+plt.legend(loc = 2)
+plt.show()
+
+y_hat = x_lin * w + b
+plt.plot(x_lin, y, 'b.', label = 'data')
+plt.plot(x_lin, y_hat, 'r-', label = 'prediction')
+plt.title("Assume we have data points (And the prediction)")
+plt.legend(loc = 2)
+plt.show()
+
+MSE = mean_Square_Error(y, y_hat)
+print("The Mean squared error is %.3f" % (MSE))
+
+
