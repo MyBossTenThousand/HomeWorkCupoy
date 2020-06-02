@@ -1,0 +1,22 @@
+請上 Kaggle, 在 Competitions 或 Dataset 中找一組競賽或資料並寫下：
+
+你選的這組資料為何重要
+
+資料從何而來 (tips: 譬如提供者是誰、以什麼方式蒐集)
+
+蒐集而來的資料型態為何
+
+這組資料想解決的問題如何評估
+
+https://www.kaggle.com/bappekim/air-pollution-in-seoul
+解：
+  你選的這組資料為何重要：因為此資料有三個優點取得容易、資料欄位清楚和資料充足，很適合做空氣評估實驗。
+  
+  資料來源：https://data.seoul.go.kr/dataList/OA-15526/S/1/datasetView.do
+           https://data.seoul.go.kr/dataList/OA-15516/S/1/datasetView.do
+           https://data.seoul.go.kr/dataList/OA-15515/S/1/datasetView.do
+           
+  資料型態：.CSV 檔，進入python 可以轉成 DataFrame等各種型態
+  
+  解決的問題與評估：先做資料前處理，如：缺值補0或者補資料平均數，做欄位相關度，把無相關的排除，接著將資料餵給機器學習或者類神經等方法尋求最佳方法，
+                  然後做資料測試評估預測正確率、找尋最佳參數設定。
