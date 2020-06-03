@@ -1,0 +1,14 @@
+專案的目標？ (要解決什麼問題）
+使用的技術是？ (只需知道名稱即可，例如：使用 CNN 卷積神經網路做影像分類)
+資料來源？
+Bridging the Domain Gap for Neural Models
+解：
+  專案的目標：此篇論文他的目的，解決經網路移植性差的困擾，此篇論文做一個小小的實驗，
+             如要解決的目標為SVHN dataset想成一個領域，MNIST dataset想成其他領域，
+             當有一CNN要做數字的辨識拿SVHN dataset 準確度能到98%，但是相同權重，相同架構，
+             拿去MNIST dataset準確度卻很差(67.1%)，雖然任務都式辨識數字0~9。
+             
+  使用的技術是：提出一個基於對抗式網路學習方法，特徵含有一個生成器，和兩個分類器C1和C2，
+               這些分類器利用判定邊界對準源和目標樣本
+  
+  資料來源：https://machinelearning.apple.com/2019/06/15/bridging-the-domain-gap-for-neural-models.html
