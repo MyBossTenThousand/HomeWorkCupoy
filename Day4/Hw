@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jun  3 10:58:05 2020
+
+@author: user
+"""
+
+import os
+import numpy as np
+import pandas as pd
+
+dir_data = os.getcwd()
+
+f_app = os.path.join(dir_data, 'credit_card_balance.csv')
+app_train = pd.read_csv(f_app)
+
+print(app_train.head())
