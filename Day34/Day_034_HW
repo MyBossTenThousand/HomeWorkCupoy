@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jul  3 16:20:08 2020
+
+@author: psycho
+"""
+
+import numpy as np
+X = np.arange(1000).reshape(200, 5)
+y = np.zeros(200)
+y[:40] = 1
+
+from sklearn.model_selection import train_test_split
+y_train, y_test = train_test_split(y, test_size = 0.05,random_state=8)
+print(y_test)
+
+
+y_train1, y_test1 = train_test_split(y[:40], test_size = 10,random_state=99)
+print(y_test1)
+
+y_test = np.append(y_test, y_test1)
+
+print(y_test)
