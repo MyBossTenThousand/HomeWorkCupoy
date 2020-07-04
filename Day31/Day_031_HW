@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jul  3 15:44:36 2020
+
+@author: psycho
+"""
+
+import pandas as pd
+import numpy as np
+import copy
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+import warnings
+warnings.filterwarnings('ignore')
+
+data_path = 'data/'
+df = pd.read_csv(data_path + 'titanic_train.csv')
+
+train_Y = df['Survived']
+df = df.drop(['PassengerId', 'Survived'] , axis=1)
+print(df.head())
+
+
+# 因為需要把類別型與數值型特徵都加入, 故使用最簡版的特徵工程
+LEncoder = LabelEncoder()
+MMEncoder = MinMaxScaler()
+for c in df.columns:
+    df[c] = df[c].fillna(-1)
+    if df[c].dtype == 'object':
+        df[c] = LEncoder.fit_transform(list(df[c].values))
+    df[c] = MMEncoder.fit_transform(df[c].values.reshape(-1, 1))
+print(df.head())
+
+# 隨機森林擬合後, 將結果依照重要性由高到低排序
+estimator = RandomForestClassifier()
+estimator.fit(df.values, train_Y)
+feats = pd.Series(data=estimator.feature_importances_, index=df.columns)
+feats = feats.sort_values(ascending=False)
+print(feats)
+
+print("作業1")
+
+# 高重要性特徵 + 隨機森林
+high_feature = list(feats[:3].index)
+train_X = MMEncoder.fit_transform(df[high_feature])
+print("高重要性特徵 + 隨機森林:",cross_val_score(estimator, train_X, train_Y, cv=5).mean())
+
+# 原始特徵 + 隨機森林
+train_X = MMEncoder.fit_transform(df)
+print("原始特徵 + 隨機森林:",cross_val_score(estimator, train_X, train_Y, cv=5).mean())
+
+print("作業2")
+
+# 觀察重要特徵與目標的分布
+# 第一名              
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.regplot(x=train_Y, y=df['Sex'], fit_reg=False)
+plt.show()
+
+# 第二名       
+sns.regplot(x=train_Y, y=df['Ticket'], fit_reg=False)
+plt.show()
+
+# 製作新特徵看效果
+df['Add_char'] = (df['Sex'] + df['Ticket']) / 2
+df['Multi_char'] = df['Sex'] * df['Ticket']
+df['GO_div1p'] = df['Sex'] / (df['Ticket']+1) * 2
+df['OG_div1p'] = df['Sex'] / (df['Ticket']+1) * 2
+train_X = MMEncoder.fit_transform(df)
+print(cross_val_score(estimator, train_X, train_Y, cv=5).mean())
+
